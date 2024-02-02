@@ -1457,7 +1457,7 @@ class SelectQueryTypeTest {
 
     val query = file.namedExecutes.first()
     val generator = ExecuteQueryGenerator(query)
-
+val queryString = generator.function().toString()
     assertThat(generator.function().toString()).isEqualTo(
       """
       |public fun insertTwice(`value`: kotlin.Long) {
@@ -1728,6 +1728,10 @@ class SelectQueryTypeTest {
       |        |  VALUES (NULL)
       |        ""${'"'}.trimMargin(), 0)
       |    driver.executeQuery(${query.idForIndex(1).withUnderscores}, ""${'"'}SELECT last_insert_rowid()""${'"'}, mapper, 0)
+      |  } .also {
+      |    notifyQueries(-904_082_863) { emit ->
+      |      emit("data")
+      |    }
       |  }
       |
       |  override fun toString(): kotlin.String = "Test.sq:insertAndReturn"
@@ -1878,6 +1882,10 @@ class SelectQueryTypeTest {
       |        |  FROM data
       |        |  WHERE id = last_insert_rowid()
       |        ""${'"'}.trimMargin(), mapper, 0)
+      |  } .also {
+      |    notifyQueries(-904_082_863) { emit ->
+      |      emit("data")
+      |    }
       |  }
       |
       |  override fun toString(): kotlin.String = "Test.sq:insertAndReturn"

@@ -314,6 +314,7 @@ class SelectQueryGenerator(
       .addParameter(MAPPER_NAME, LambdaTypeName.get(parameters = arrayOf(CURSOR_TYPE), returnType = QUERY_RESULT_TYPE.parameterizedBy(genericResultType)))
       .returns(QUERY_RESULT_TYPE.parameterizedBy(genericResultType))
       .addCode(executeBlock())
+//      .notifyQueries()
 
     // For each bind argument the query has.
     query.parameters.forEach { parameter ->
